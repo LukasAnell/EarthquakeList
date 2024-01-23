@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken
 
 class EarthquakeListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEarthquakeListBinding
-    private lateinit var earthquakeList: Earthquake
+    private lateinit var featureCollection: FeatureCollection
 
     companion object {
         const val TAG = "EarthquakeListActivity"
@@ -20,7 +20,7 @@ class EarthquakeListActivity : AppCompatActivity() {
         binding = ActivityEarthquakeListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         loadJSON()
-        Log.d(TAG, "earthquakeList: $earthquakeList")
+        Log.d(TAG, "featureCollection: $featureCollection")
 
     }
 
@@ -30,9 +30,9 @@ class EarthquakeListActivity : AppCompatActivity() {
             it.readText()
         }
         val gson = Gson()
-        val sType = object: TypeToken<Earthquake>() { }.type
-        val otherList = gson.fromJson<Earthquake>(jsonString, sType)
+        val sType = object: TypeToken<FeatureCollection>() { }.type
+        val otherList = gson.fromJson<FeatureCollection>(jsonString, sType)
 
-        earthquakeList = otherList
+        featureCollection = otherList
     }
 }
