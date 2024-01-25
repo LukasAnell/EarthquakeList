@@ -1,4 +1,4 @@
-package com.example.earthquakelist
+package com.example.earthquakelist.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
