@@ -1,8 +1,12 @@
 package com.example.earthquakelist
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.earthquakelist.api.EarthquakeService
@@ -41,6 +45,7 @@ class EarthquakeListActivity : AppCompatActivity() {
                 // don't forget a null check before trying to use the data
                 // response.body() contains the object in the <> after response
                 featureCollection = response.body()!!
+                refreshList()
                 Log.d(TAG, "onResponse: ${response.body()}")
             }
 
@@ -60,6 +65,38 @@ class EarthquakeListActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = binding.recyclerViewEarthquakeListEarthquakes
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = earthquakeAdapter
+    }
+
+    @SuppressLint("ResourceType")
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.sorting_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection.
+        return when (item.itemId) {
+            R.id.menu_item_sortByMagnitude -> {
+                sortByMagnitude()
+                refreshList()
+                true
+            }
+            R.id.menu_item_sortByTime -> {
+                sortByTime()
+                refreshList()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun sortByMagnitude() {
+        featureCollection.features.sortedBy { it.properties.mag }
+    }
+
+    private fun sortByTime() {
+        featureCollection.features.sortedBy { it.properties.time }
     }
 
     /*
