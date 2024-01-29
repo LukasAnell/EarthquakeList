@@ -11,5 +11,4 @@ interface EarthquakeService {
 
     @GET("all_day.geojson")
     fun getEarthquakeDataPastDay(): Call<FeatureCollection>
-
 }

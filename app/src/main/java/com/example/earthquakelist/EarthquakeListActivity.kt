@@ -59,44 +59,14 @@ class EarthquakeListActivity : AppCompatActivity() {
         // Log.d(TAG, "featureCollection: $featureCollection")
     }
 
+
+
     private fun refreshList() {
         val earthquakeAdapter = EarthquakeAdapter(featureCollection)
 
         val recyclerView: RecyclerView = binding.recyclerViewEarthquakeListEarthquakes
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = earthquakeAdapter
-    }
-
-    @SuppressLint("ResourceType")
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.sorting_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle item selection.
-        return when (item.itemId) {
-            R.id.menu_item_sortByMagnitude -> {
-                sortByMagnitude()
-                refreshList()
-                true
-            }
-            R.id.menu_item_sortByTime -> {
-                sortByTime()
-                refreshList()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun sortByMagnitude() {
-        featureCollection.features.sortedBy { it.properties.mag }
-    }
-
-    private fun sortByTime() {
-        featureCollection.features.sortedBy { it.properties.time }
     }
 
     /*

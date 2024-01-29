@@ -1,5 +1,6 @@
 package com.example.earthquakelist
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,11 +30,20 @@ class EarthquakeAdapter(private var featureCollection: FeatureCollection): Recyc
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        // val context = viewHolder.layout.context
+         val context = viewHolder.layout.context
         val earthquake = featureCollection.features[position]
-        viewHolder.magnitudeTextView.text = earthquake.properties.mag.toString()
+        viewHolder.magnitudeTextView.text = String.format("%.2f", earthquake.properties.mag)
         viewHolder.locationTextView.text = earthquake.properties.place
         viewHolder.timeTextView.text = Date(earthquake.properties.time).toString()
+
+        viewHolder.layout.setOnClickListener {
+            // Toast.makeText(context, hero.name, Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, EarthquakeMapActivity::class.java)
+
+            intent.putExtra(EarthquakeMapActivity.EXTRA_EARTHQUAKE, earthquake)
+
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount() = featureCollection.features.size
