@@ -6,5 +6,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class FeatureCollection(
     val metadata: Metadata,
-    val features: List<Feature>
+    var features: List<Feature>
 ): Parcelable

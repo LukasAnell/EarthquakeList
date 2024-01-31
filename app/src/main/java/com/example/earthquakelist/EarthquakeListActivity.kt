@@ -45,6 +45,7 @@ class EarthquakeListActivity : AppCompatActivity() {
                 // don't forget a null check before trying to use the data
                 // response.body() contains the object in the <> after response
                 featureCollection = response.body()!!
+                featureCollection.features = featureCollection.features.sortedBy { it.properties.mag }.reversed()
                 refreshList()
                 Log.d(TAG, "onResponse: ${response.body()}")
             }
