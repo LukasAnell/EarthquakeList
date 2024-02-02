@@ -1,14 +1,13 @@
 package com.example.earthquakelist
 
-import android.R
-import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.DisplayMetrics
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.res.ResourcesCompat
+import androidx.core.content.ContextCompat
 import com.example.earthquakelist.databinding.ActivityEarthquakeMapBinding
 import com.example.earthquakelist.models.Feature
 import org.osmdroid.config.Configuration.*
@@ -16,6 +15,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.GroundOverlay
+import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.ScaleBarOverlay
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
 
@@ -27,7 +27,7 @@ class EarthquakeMapActivity : AppCompatActivity() {
     private lateinit var earthquake: Feature
     companion object {
         const val TAG = "EarthquakeMakeActivity"
-        val EXTRA_EARTHQUAKE = "earthquake"
+        const val EXTRA_EARTHQUAKE = "earthquake"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,13 +45,12 @@ class EarthquakeMapActivity : AppCompatActivity() {
         map = binding.mapEarthquakeMap
         map.setTileSource(TileSourceFactory.MAPNIK)
         val mapController = map.controller
-        mapController.setZoom(9.5)
+        mapController.setZoom(9.0)
         val centerPoint = GeoPoint(earthquake.geometry.coordinates[1], earthquake.geometry.coordinates[0])
         mapController.setCenter(centerPoint)
 
         val myGroundOverlay = GroundOverlay()
         myGroundOverlay.setPosition(centerPoint, centerPoint)
-        myGroundOverlay.image = BitmapFactory.decodeResource(resources, R.drawable.pin_marker)
 
         myGroundOverlay.transparency = 0.25f
         myGroundOverlay.bearing = 0f
@@ -66,6 +65,16 @@ class EarthquakeMapActivity : AppCompatActivity() {
         scaleBarOverlay.setCentred(true)
         scaleBarOverlay.setScaleBarOffset(dm.widthPixels / 2, 10)
         map.overlays.add(scaleBarOverlay)
+
+        binding.mapTextViewDetails.text = earthquake.properties.title
+        binding.mapTextViewUrl.text = earthquake.properties.url
+
+        val marker = Marker(map)
+        marker.position = centerPoint
+        marker.title = earthquake.properties.place
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+        map.overlays.add(marker)
+        map.invalidate()
     }
 
     override fun onResume() {
