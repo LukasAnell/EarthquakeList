@@ -30,11 +30,38 @@ class EarthquakeAdapter(private var featureCollection: FeatureCollection): Recyc
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-         val context = viewHolder.layout.context
+        val context = viewHolder.layout.context
         val earthquake = featureCollection.features[position]
-        viewHolder.magnitudeTextView.text = String.format("%.2f", earthquake.properties.mag)
-        viewHolder.locationTextView.text = earthquake.properties.place
-        viewHolder.timeTextView.text = Date(earthquake.properties.time).toString()
+        val magnitude = earthquake.properties.mag
+        val place = earthquake.properties.place
+        val date = Date(earthquake.properties.time).toString()
+
+        when {
+            // significant
+            magnitude > 6.5 -> {
+                viewHolder.magnitudeTextView.setTextColor(context.resources.getColor(R.color.significant, context.theme))
+                viewHolder.magnitudeTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+            }
+            // large
+            magnitude <= 6.5 && magnitude > 4.5 -> {
+                viewHolder.magnitudeTextView.setTextColor(context.resources.getColor(R.color.large, context.theme))
+                viewHolder.magnitudeTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+            }
+            // moderate
+            magnitude <= 4.5 && magnitude > 2.5 -> {
+                viewHolder.magnitudeTextView.setTextColor(context.resources.getColor(R.color.moderate, context.theme))
+                viewHolder.magnitudeTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+            }
+            // small
+            magnitude <= 2.5 && magnitude > 1 -> {
+                viewHolder.magnitudeTextView.setTextColor(context.resources.getColor(R.color.small, context.theme))
+                viewHolder.magnitudeTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+            }
+        }
+
+        viewHolder.magnitudeTextView.text = String.format("%.2f", magnitude)
+        viewHolder.locationTextView.text = place
+        viewHolder.timeTextView.text = date
 
         viewHolder.layout.setOnClickListener {
             // Toast.makeText(context, hero.name, Toast.LENGTH_SHORT).show()
