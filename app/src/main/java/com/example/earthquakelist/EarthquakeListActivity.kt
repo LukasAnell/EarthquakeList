@@ -1,20 +1,14 @@
 package com.example.earthquakelist
 
-import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.earthquakelist.api.EarthquakeService
 import com.example.earthquakelist.api.RetrofitHelper
 import com.example.earthquakelist.databinding.ActivityEarthquakeListBinding
 import com.example.earthquakelist.models.FeatureCollection
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
