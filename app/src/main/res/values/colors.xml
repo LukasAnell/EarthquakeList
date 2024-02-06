@@ -2,8 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="significant">##A600FF</color>
-    <color name="large">#FF0800</color>
+    <color name="significant">#A600FF</color>
+    <color name="large">#FF0000</color>
     <color name="moderate">#FF4D00</color>
     <color name="small">#1900FF</color>
 </resources>

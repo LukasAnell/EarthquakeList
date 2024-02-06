@@ -1,14 +1,22 @@
 package com.example.earthquakelist
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.earthquakelist.models.FeatureCollection
 import java.util.Date
+
 
 class EarthquakeAdapter(private var featureCollection: FeatureCollection): RecyclerView.Adapter<EarthquakeAdapter.ViewHolder>() {
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -40,24 +48,34 @@ class EarthquakeAdapter(private var featureCollection: FeatureCollection): Recyc
             // significant
             magnitude > 6.5 -> {
                 viewHolder.magnitudeTextView.setTextColor(context.resources.getColor(R.color.significant, context.theme))
-                viewHolder.magnitudeTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                viewHolder.magnitudeTextView
+                    .setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        R.drawable.error_filled, 0, 0, 0)
             }
             // large
             magnitude <= 6.5 && magnitude > 4.5 -> {
                 viewHolder.magnitudeTextView.setTextColor(context.resources.getColor(R.color.large, context.theme))
-                viewHolder.magnitudeTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                viewHolder.magnitudeTextView
+                    .setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        R.drawable.error_outline, 0, 0, 0)
             }
             // moderate
             magnitude <= 4.5 && magnitude > 2.5 -> {
                 viewHolder.magnitudeTextView.setTextColor(context.resources.getColor(R.color.moderate, context.theme))
-                viewHolder.magnitudeTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                viewHolder.magnitudeTextView
+                    .setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        0, 0, 0, 0)
             }
             // small
             magnitude <= 2.5 && magnitude > 1 -> {
                 viewHolder.magnitudeTextView.setTextColor(context.resources.getColor(R.color.small, context.theme))
-                viewHolder.magnitudeTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                viewHolder.magnitudeTextView
+                    .setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        0, 0, 0, 0)
             }
         }
+
+
 
         viewHolder.magnitudeTextView.text = String.format("%.2f", magnitude)
         viewHolder.locationTextView.text = place
