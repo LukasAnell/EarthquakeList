@@ -47,7 +47,7 @@ class EarthquakeListActivity : AppCompatActivity() {
                 // response.body() contains the object in the <> after response
                 featureCollection = response.body()!!
                 featureCollection.features = featureCollection.features
-                    .sortedBy { -it.properties.mag }
+                    .sortedBy { -it.properties.time }
                     .filter { it.properties.mag >= 1.0}
                 refreshList()
                 Log.d(TAG, "sorted: ${featureCollection.features}")
